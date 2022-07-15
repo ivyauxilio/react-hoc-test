@@ -1,4 +1,4 @@
-import React,{useReducer} from 'react';
+import React, { useReducer } from 'react';
 
 export const Store = React.createContext();
 
@@ -6,7 +6,7 @@ const initialState = {
     users: [],
     posts: [],
     comments: [],
-    post: []
+    post: [],
 };
 
 function reducer(state, action) {

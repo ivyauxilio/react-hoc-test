@@ -1,44 +1,40 @@
-import React, { useEffect, useState, useContext, Component } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Store } from './../../Store';
 import PostList from './postList';
-import axios from 'axios';
-
 
 function Posts(props) {
 
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [emptySearch, setEmptySearch] = useState(false);
 
     const { state, dispatch } = useContext(Store);
 
-    let { posts, comments, users } = state;
+    const { posts, comments, users } = state;
 
-    const fetchDataPosts = async () => {
-        axios.get(`https://jsonplaceholder.typicode.com/posts`).then(res => {
-            const data = res.data;
+    const fetchDataPosts = () => {
+        axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {
             return dispatch({
                 type: 'FETCH_DATA_POSTS',
-                payload: data
+                payload: res.data,
             });
         });
     };
-    const fetchDataUsers = async () => {
-        axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
-            const data = res.data;
+    const fetchDataUsers = () => {
+        axios.get('https://jsonplaceholder.typicode.com/users').then(res => {
             return dispatch({
                 type: 'FETCH_DATA_USERS',
-                payload: data
+                payload: res.data,
             });
         });
     };
-    const fetchDataComments = async () => {
-        axios.get(`https://jsonplaceholder.typicode.com/comments`).then(res => {
-            const data = res.data;
+    const fetchDataComments = () => {
+        axios.get('https://jsonplaceholder.typicode.com/comments').then(res => {
             return dispatch({
                 type: 'FETCH_DATA_COMMENTS',
-                payload: data
+                payload: res.data,
             });
         });
     };
@@ -49,26 +45,25 @@ function Posts(props) {
         fetchDataComments();
     }, []);
 
-    const searchHandler = (searchTerm) => {
-        setSearchTerm(searchTerm);
-        if (searchTerm !== "") {
-            const userList = users.filter(x => x.name === searchTerm ||
-                x.username === searchTerm || x.email === searchTerm)
+    const searchHandler = (search) => {
+        setSearchTerm(search);
+        if (search !== "") {
+            const userList = users.filter(x => x.name === search || x.username === search || x.email === search);
 
             if (!userList.length <= 0) {
-                const postSearchList = posts.filter(x => x.userId === userList[0].id)
+                const postSearchList = posts.filter(x => x.userId === userList[0].id);
                 setSearchResults(postSearchList);
             } else {
-                setEmptySearch(true)
+                setEmptySearch(true);
             }
         } else {
             setSearchResults(posts);
-            setEmptySearch(false)
+            setEmptySearch(false);
         }
     };
 
     function clearBtn() {
-        searchHandler('')
+        searchHandler('');
     }
 
     return (
@@ -80,7 +75,6 @@ function Posts(props) {
                 searchKeyword={searchHandler}
                 reset={clearBtn}
                 emptySearch={emptySearch}
-                message={props.Message}
             />
         </div>
     );
@@ -92,4 +86,4 @@ Posts.proTypes = {
     searchTerm: PropTypes.string,
     searchResults: PropTypes.array,
     emptySearch: PropTypes.bool,
-}
+};

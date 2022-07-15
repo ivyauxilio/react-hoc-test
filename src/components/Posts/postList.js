@@ -1,16 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { ListGroup } from 'react-bootstrap';
-
-
-PostList.displayName = 'PostList'
-
 function PostList(props) {
-
     const { users, comments, posts, reset, emptySearch } = props;
-    const inputEl = useRef("");
-    const [searchVal, setSearchValue] = useState("");
+    const inputEl = useRef('');
+    const [searchVal, setSearchValue] = useState('');
 
 
     function seach() {
@@ -20,10 +15,10 @@ function PostList(props) {
     }
 
     const resetBtn = () => {
-        setSearchValue('')
-        reset()
+        setSearchValue('');
+        reset();
     }
-  
+
     return (
 
         <div className="col-12">
@@ -39,12 +34,12 @@ function PostList(props) {
                         />
                         {/* <button className="close-icon" type="reset" onClick={resetBtn}></button> */}
                         <div className="input-group-append">
-                            <button className="btn btn-primary rounded-0" onClick={() => seach()} type="search">Search</button>
+                            <button className="btn btn-primary rounded-0" onClick={() => seach()}>Search</button>
                         </div>
                         <div className="input-group-append">
                             <button className="btn btn-danger rounded-0" disabled={searchVal === ''} onClick={() => resetBtn()} type="search">Clear</button>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -55,7 +50,7 @@ function PostList(props) {
                 (
                     <div key={post.id}>
                         <Link to={`/post/${post.id}`} className="text-decoration-none">
-                            <ListGroup.Item  className="shadow-lg p-3 mb-5 bg-white rounded">
+                            <ListGroup.Item className="shadow-lg p-3 mb-5 bg-white rounded">
 
                                 {users.filter(x => x.id === post.userId).map(user => (
                                     <div key={user.id}>
@@ -92,4 +87,4 @@ export default PostList;
 PostList.proTypes = {
     inputEl: PropTypes.string,
     searchVal: PropTypes.string
-  }
+}

@@ -1,21 +1,18 @@
-import React, { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Store } from './../../Store';
+import React, { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Store } from '../../Store';
 
-
-// const Post = (props) => {
-function Post(props) {
+function Post() {
     const { state, dispatch } = useContext(Store);
-    let { post, users } = state;
-    let { id } = useParams();
+    const { post, users } = state;
+    const { id } = useParams();
 
-    const fetchDataPost = async () => {
+    const fetchDataPost = () => {
         axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`).then(res => {
-            const data = res.data;
             return dispatch({
                 type: 'FETCH_DATA_POST',
-                payload: data
+                payload: res.data,
             });
         });
     };
@@ -28,7 +25,7 @@ function Post(props) {
                 
                 {users.filter(x => x.id === post.userId).map(user => (
                     <div key={user.id}>
-                        <h4 className=''>{user.name}</h4>
+                        <h4>{user.name}</h4>
                     </div>
                 ))}
                 <h3>{post.title}</h3>
@@ -36,6 +33,6 @@ function Post(props) {
             </div>
         </div>
     )
-}
+};
 
 export default Post;

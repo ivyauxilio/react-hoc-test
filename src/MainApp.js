@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate,
-} from "react-router-dom";
-import Posts from './components/Posts'
-import Post from './components/Posts/post'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Posts from './components/Posts';
+import Post from './components/Posts/post';
 import { StoreProvider } from './Store';
-import layout from "./layout";
+import layout from './layout';
 
 const Message = 'Hello from';
 
@@ -23,13 +18,10 @@ const MainApp = () =>
                     path="/"
                     element={<Navigate replace to="/posts" />}
                 />
-                {/* <Route exact path="/posts" element={<Posts Message={Message} />} />
-                <Route path="/post/:id" element={<Post Message={Message}/>} /> */}
-                <Route exact path="/posts" element={<PostsComponent message={Message}/>} />
-                <Route path="/post/:id" element={<PostComponent message={Message}/>} />
+                <Route exact path="/posts" element={<PostsComponent message={Message} />} />
+                <Route path="/post/:id" element={<PostComponent message={Message} />} />
             </Routes>
         </Router>
     </StoreProvider>;
-
 
 export default MainApp;
