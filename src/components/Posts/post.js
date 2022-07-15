@@ -24,7 +24,8 @@ function Post(props) {
     }, []);
     return (
         <div className="container my-5">
-            <div className="border rounded text-black my-2 p-3">
+            <div className="border rounded text-black my-2 p-3 shadow-lg p-3 mb-5 bg-white ">
+                
                 {users.filter(x => x.id === post.userId).map(user => (
                     <div key={user.id}>
                         <h4 className=''>{user.name}</h4>

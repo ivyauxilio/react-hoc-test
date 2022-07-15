@@ -8,9 +8,12 @@ const layout = (Component) => ({ ...props }) => {
     console.log(message, ComponentName)
 
     return (
-        <div className="container m-5">
-            <h2>{ComponentName}</h2>
-            <Component {...props} />
+        <div className="col-lg-8 offset-lg-2 col-md-12">
+            <div className="jumbotron m-lg-5 m-3">
+                <h2>{ComponentName}</h2>
+                <hr class="my-4"></hr>
+                <Component {...props} />
+            </div>
         </div>
     )
 };

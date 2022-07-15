@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext,Component } from 'react';
+import React, { useEffect, useState, useContext, Component } from 'react';
 import PropTypes from 'prop-types';
 import { Store } from './../../Store';
 import PostList from './postList';
@@ -13,7 +13,7 @@ function Posts(props) {
 
     const { state, dispatch } = useContext(Store);
 
-    let {posts,comments,users} = state;
+    let { posts, comments, users } = state;
 
     const fetchDataPosts = async () => {
         axios.get(`https://jsonplaceholder.typicode.com/posts`).then(res => {
@@ -21,27 +21,27 @@ function Posts(props) {
             return dispatch({
                 type: 'FETCH_DATA_POSTS',
                 payload: data
-              });
+            });
         });
-      };
-      const fetchDataUsers = async () => {
+    };
+    const fetchDataUsers = async () => {
         axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
             const data = res.data;
             return dispatch({
                 type: 'FETCH_DATA_USERS',
                 payload: data
-              });
+            });
         });
-      };
-      const fetchDataComments = async () => {
+    };
+    const fetchDataComments = async () => {
         axios.get(`https://jsonplaceholder.typicode.com/comments`).then(res => {
             const data = res.data;
             return dispatch({
                 type: 'FETCH_DATA_COMMENTS',
                 payload: data
-              });
+            });
         });
-      };
+    };
 
     useEffect(() => {
         fetchDataPosts();
@@ -52,14 +52,16 @@ function Posts(props) {
     const searchHandler = (searchTerm) => {
         setSearchTerm(searchTerm);
         if (searchTerm !== "") {
-            const userList = users.filter(x => x.name === searchTerm)
-             if (!userList.length <= 0) {
+            const userList = users.filter(x => x.name === searchTerm ||
+                x.username === searchTerm || x.email === searchTerm)
+
+            if (!userList.length <= 0) {
                 const postSearchList = posts.filter(x => x.userId === userList[0].id)
                 setSearchResults(postSearchList);
-            }else{
+            } else {
                 setEmptySearch(true)
             }
-        }else{
+        } else {
             setSearchResults(posts);
             setEmptySearch(false)
         }
@@ -70,7 +72,7 @@ function Posts(props) {
     }
 
     return (
-        <div className="posts m-5">
+        <div className="posts m-lg-5 m-3">
             <PostList
                 posts={searchTerm ? searchResults : posts}
                 users={users}
@@ -90,4 +92,4 @@ Posts.proTypes = {
     searchTerm: PropTypes.string,
     searchResults: PropTypes.array,
     emptySearch: PropTypes.bool,
-  }
+}
